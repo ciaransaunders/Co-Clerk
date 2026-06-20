@@ -1,0 +1,57 @@
+version: '3.8'
+
+services:
+  postgres:
+    image: postgres:15-alpine
+    environment:
+      POSTGRES_USER: ${POSTGRES_USER:-coclerk}
+      POSTGRES_PASSWORD: ${POSTGRES_PASSWORD:-coclerk_password}
+      POSTGRES_DB: ${POSTGRES_DB:-coclerk_dev}
+    ports:
+      - "5432:5432"
+    volumes:
+      - pgdata:/var/lib/postgresql/data
+    healthcheck:
+      test: ["CMD-SHELL", "pg_isready -U ${POSTGRES_USER:-coclerk} -d ${POSTGRES_DB:-coclerk_dev}"]
+      interval: 5s
+      timeout: 5s
+      retries: 5
+
+  api:
+    image: node:20.11-alpine
+    working_dir: /app
+    volumes:
+      - .:/app
+    environment:
+      - DATABASE_URL=postgresql://${POSTGRES_USER:-coclerk}:${POSTGRES_PASSWORD:-coclerk_password}@postgres:5432/${POSTGRES_DB:-coclerk_dev}
+    command: /bin/sh -c "corepack enable && pnpm install && pnpm db:migrate && pnpm db:seed && pnpm dev:api"
+    depends_on:
+      postgres:
+        condition: service_healthy
+    ports:
+      - "4000:4000"
+
+  web-clerk:
+    image: node:20.11-alpine
+    working_dir: /app
+    volumes:
+      - .:/app
+    command: /bin/sh -c "corepack enable && pnpm install && pnpm dev:clerk"
+    depends_on:
+      - api
+    ports:
+      - "3000:5173"
+
+  web-barrister:
+    image: node:20.11-alpine
+    working_dir: /app
+    volumes:
+      - .:/app
+    command: /bin/sh -c "corepack enable && pnpm install && pnpm dev:barrister"
+    depends_on:
+      - api
+    ports:
+      - "3001:5173"
+
+volumes:
+  pgdata:

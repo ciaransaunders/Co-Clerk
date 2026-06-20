@@ -1,0 +1,26 @@
+{
+  "name": "coclerk-monorepo",
+  "version": "0.1.0",
+  "private": true,
+  "workspaces": [
+    "apps/*",
+    "packages/*"
+  ],
+  "scripts": {
+    "dev": "concurrently -n api,clerk,barrister -c blue,green,magenta \"pnpm --filter @coclerk/api dev\" \"pnpm --filter @coclerk/web-clerk dev\" \"pnpm --filter @coclerk/web-barrister dev\"",
+    "dev:api": "pnpm --filter @coclerk/api dev",
+    "dev:clerk": "pnpm --filter @coclerk/web-clerk dev",
+    "dev:barrister": "pnpm --filter @coclerk/web-barrister dev",
+    "build": "pnpm -r build",
+    "test": "pnpm -r test",
+    "db:seed": "pnpm --filter @coclerk/database db:seed",
+    "db:migrate": "pnpm --filter @coclerk/database db:migrate"
+  },
+  "devDependencies": {
+    "concurrently": "^8.2.2"
+  },
+  "engines": {
+    "node": ">=20.11.0",
+    "pnpm": ">=8.0.0"
+  }
+}

@@ -1,0 +1,16 @@
+node_modules
+dist
+.DS_Store
+*.tsbuildinfo
+# Build artifacts some packages emit alongside source files.
+packages/*/src/**/*.js
+packages/*/src/**/*.d.ts
+apps/*/src/**/*.js
+apps/*/src/**/*.d.ts
+# Allow declaration files we intentionally hand-author.
+!apps/*/src/vite-env.d.ts
+# Local Claude Code tooling — not part of the project.
+.claude/
+.skills/
+# Stray binaries that shouldn't be in source control.
+<role>.pdf

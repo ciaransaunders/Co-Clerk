@@ -1,0 +1,16 @@
+{
+  "extends": "../../tsconfig.json",
+  "compilerOptions": {
+    "types": ["node"],
+    "noEmit": true,
+    "composite": false,
+    "declaration": false,
+    "baseUrl": ".",
+    "paths": {
+      "@coclerk/domain": ["../domain/src"],
+      "@coclerk/domain/*": ["../domain/src/*"]
+    }
+  },
+  "include": ["src"]
+}
+

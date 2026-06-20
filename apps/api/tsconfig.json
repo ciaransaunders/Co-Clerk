@@ -1,0 +1,16 @@
+{
+  "extends": "../../tsconfig.json",
+  "compilerOptions": {
+    "types": ["jest", "node"],
+    "outDir": "./dist",
+    "composite": false,
+    "declaration": false,
+    "baseUrl": ".",
+    "paths": {
+      "@coclerk/domain": ["../../packages/domain/src"],
+      "@coclerk/domain/*": ["../../packages/domain/src/*"]
+    }
+  },
+  "include": ["src"]
+}
+

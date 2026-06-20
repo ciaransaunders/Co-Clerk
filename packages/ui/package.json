@@ -1,0 +1,13 @@
+{
+  "name": "@coclerk/ui",
+  "version": "0.1.0",
+  "private": true,
+  "main": "src/index.ts",
+  "exports": {
+    ".": "./src/index.ts",
+    "./style.css": "./index.css"
+  },
+  "dependencies": {
+    "react": "^18.2.0"
+  }
+}
